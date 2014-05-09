@@ -86,19 +86,19 @@ my %outar;
 INPUT:
 my $mid   = btar(%intar);##选出得分最高的靶点
 #print "mid is $mid \n";
-my $left  = ( $intar{$mid}->[2] );   #left equals [2] 
-$left += 1;  #2-7 seed 区开始
+my $left  = ( $intar{$mid}->[3] -6 );   #left equals [2] 
+# $left += 1;  #2-7 seed 区开始
 #print "left  is $left  \n";
-my $right = ( $intar{$mid}->[3] );   #right equal [3]
-$right += 6; #2-7 seed 区结束
+my $right = ( $intar{$mid}->[3] -1);   #right equal [3]
+# $right += 6; #2-7 seed 区结束
 #print "right  is $right \n";
 
 $outar{$mid} = $intar{$mid}; #copy; ##记录得分最高的靶点
 delete $intar{$mid};##删除得分最高的mirna靶点ID
 ##删除与得分最高靶点有竞争的靶点
 foreach my $to_be_delete ( keys %intar ){
-    my $start = $intar{$to_be_delete}->[2] +1;
-    my $end = $intar{$to_be_delete}->[2] +6;
+    my $start = $intar{$to_be_delete}->[3] -6;
+    my $end = $intar{$to_be_delete}->[3] -1;
     if( ($start >= $left && $start <= $right) or ($end >= $left && $end <= $right) ){
         delete $intar{$to_be_delete};
     } 
