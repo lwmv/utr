@@ -95,11 +95,11 @@ my $right = ( $intar{$mid}->[3] -1);   #right equal [3]
 
 $outar{$mid} = $intar{$mid}; #copy; ##记录得分最高的靶点
 delete $intar{$mid};##删除得分最高的mirna靶点ID
-##删除与得分最高靶点有竞争的靶点
+##删除与得分最高靶点有竞争的靶点： 整个 microRNA序列与得分最高靶点的 seed 区重合则删除之
 foreach my $to_be_delete ( keys %intar ){
-    my $start = $intar{$to_be_delete}->[3] -6;
-    my $end = $intar{$to_be_delete}->[3] -1;
-    if( ($start >= $left && $start <= $right) or ($end >= $left && $end <= $right) ){
+    my $start = $intar{$to_be_delete}->[2];
+    my $end = $intar{$to_be_delete}->[3];
+    if( ($start >= $left && $start <= $right) or ($end >= $left && $end <= $right) or ($start <= $left && $end >= $right)){
         delete $intar{$to_be_delete};
     } 
 #    if ( $intar{$to_be_delete}->[2] >= $left && $intar{$to_be_delete}->[2] <= $right ){
